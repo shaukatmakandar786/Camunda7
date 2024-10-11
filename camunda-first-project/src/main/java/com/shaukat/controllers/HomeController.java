@@ -28,4 +28,14 @@ public class HomeController {
 		
 		return "BPMN has executed...!";
 	}
+	
+	@GetMapping("/task")
+	public String scriptTask01() {
+		
+		ProcessEngine processEngine= ProcessEngines.getDefaultProcessEngine();
+		ProcessInstantiationBuilder instance= processEngine.getRuntimeService().createProcessInstanceByKey("Process_1s5vocv");
+		instance.executeWithVariablesInReturn();
+		
+		return "BPMN script task executed...!";
+	}
 }
