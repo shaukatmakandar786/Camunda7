@@ -74,10 +74,17 @@
 	  <version>15.4</version>
 	</dependency>
 	
-	<!--with this we can make an API call from BPMN files and DMN file-->
+	<!--This enables the Camunda engine to work with connectors in general.-->
 	<dependency>
-	  <groupId>org.camunda.bpm</groupId>
-	  <artifactId>camunda-engine-plugin-connect</artifactId>
+	    <groupId>org.camunda.bpm</groupId>
+	    <artifactId>camunda-engine-plugin-connect</artifactId>
+	</dependency>
+	
+	<!--This is the actual HTTP connector implementation that allows you to use http-connector in your BPMN models
+	for making HTTP requests.-->
+	<dependency>
+	    <groupId>org.camunda.connect</groupId>
+	    <artifactId>camunda-connect-http-client</artifactId>
 	</dependency>
 
   </dependencies>
