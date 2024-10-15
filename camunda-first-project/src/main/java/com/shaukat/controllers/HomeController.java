@@ -44,7 +44,6 @@ public class HomeController {
 	public String sequenceFlowExample(@PathVariable("processKey") String processKey) {
 		
 		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-		
 		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey(processKey);
 		instance.executeWithVariablesInReturn();
 		
