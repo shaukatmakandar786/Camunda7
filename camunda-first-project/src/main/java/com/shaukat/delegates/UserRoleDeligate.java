@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import jakarta.inject.Named;
 
-@Component("abc")
+@Component
 public class UserRoleDeligate implements JavaDelegate{
 	
 	@Override

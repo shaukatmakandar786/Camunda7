@@ -4,6 +4,7 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,5 +38,15 @@ public class HomeController {
 		instance.executeWithVariablesInReturn();
 		
 		return "BPMN script task executed...!";
+	}
+	
+	@GetMapping("/seq/{processKey}")
+	public String sequenceFlowExample(@PathVariable("processKey") String processKey) {
+		
+		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey(processKey);
+		instance.executeWithVariablesInReturn();
+		
+		return "BPMN sequence flow executed...!";
 	}
 }
