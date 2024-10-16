@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_18ohmll" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:process id="Process_190o8n7" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0c54ce1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0c54ce1" sourceRef="StartEvent_1" targetRef="Activity_0ok1xr9" />
+    <bpmn:scriptTask id="Activity_0ok1xr9" name="Initialize User Object" scriptFormat="JavaScript" camunda:resultVariable="userObj1">
+      <bpmn:incoming>Flow_0c54ce1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0us0tup</bpmn:outgoing>
+      <bpmn:script>var obj={
+    id: 101
+}
+obj;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0us0tup" sourceRef="Activity_0ok1xr9" targetRef="Activity_16hd6s4" />
+    <bpmn:callActivity id="Activity_16hd6s4" name="Assign name and email" calledElement="subprocess_name_email_execute">
+      <bpmn:extensionElements>
+        <camunda:in source="userObj1" target="inputObj" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0us0tup</bpmn:incoming>
+      <bpmn:outgoing>Flow_172d8j5</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:scriptTask id="Activity_0uo20bx" name="Initialize User Object2" scriptFormat="JavaScript" camunda:resultVariable="userObj2">
+      <bpmn:incoming>Flow_172d8j5</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kvqrct</bpmn:outgoing>
+      <bpmn:script>var obj={
+    id: 102
+}
+obj;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_172d8j5" sourceRef="Activity_16hd6s4" targetRef="Activity_0uo20bx" />
+    <bpmn:callActivity id="Activity_1pcpgvo" name="Assign name and email" calledElement="subprocess_name_email_execute">
+      <bpmn:extensionElements>
+        <camunda:in source="userObj2" target="inputObj" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1kvqrct</bpmn:incoming>
+      <bpmn:outgoing>Flow_01xtee8</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_1kvqrct" sourceRef="Activity_0uo20bx" targetRef="Activity_1pcpgvo" />
+    <bpmn:endEvent id="Event_0mb3uo2">
+      <bpmn:incoming>Flow_01xtee8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_01xtee8" sourceRef="Activity_1pcpgvo" targetRef="Event_0mb3uo2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_190o8n7">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18syk65_di" bpmnElement="Activity_0ok1xr9">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18iklje_di" bpmnElement="Activity_16hd6s4">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_15le6bp" bpmnElement="Activity_0uo20bx">
+        <dc:Bounds x="600" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11rkjlr" bpmnElement="Activity_1pcpgvo">
+        <dc:Bounds x="770" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mb3uo2_di" bpmnElement="Event_0mb3uo2">
+        <dc:Bounds x="942" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0c54ce1_di" bpmnElement="Flow_0c54ce1">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0us0tup_di" bpmnElement="Flow_0us0tup">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_172d8j5_di" bpmnElement="Flow_172d8j5">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="600" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kvqrct_di" bpmnElement="Flow_1kvqrct">
+        <di:waypoint x="700" y="117" />
+        <di:waypoint x="770" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01xtee8_di" bpmnElement="Flow_01xtee8">
+        <di:waypoint x="870" y="117" />
+        <di:waypoint x="942" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
