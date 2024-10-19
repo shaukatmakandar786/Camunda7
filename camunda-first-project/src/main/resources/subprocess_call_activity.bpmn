@@ -111,32 +111,32 @@ userObj1.departmentName="IT";</bpmn:script>
         <dc:Bounds x="1702" y="167" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0l4ddze_di" bpmnElement="Activity_0bncv0y" isExpanded="true">
-        <dc:Bounds x="940" y="80" width="520" height="210" />
+        <dc:Bounds x="950" y="80" width="500" height="210" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0w3jell_di" bpmnElement="Event_0w3jell">
-        <dc:Bounds x="972" y="162" width="36" height="36" />
+        <dc:Bounds x="977" y="167" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1axlfml_di" bpmnElement="Event_1axlfml">
-        <dc:Bounds x="1382" y="162" width="36" height="36" />
+        <dc:Bounds x="1387" y="167" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rhgeg9_di" bpmnElement="Activity_0vntrze">
-        <dc:Bounds x="1060" y="140" width="100" height="80" />
+        <dc:Bounds x="1065" y="145" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1w9o2tj_di" bpmnElement="Activity_17icnbn">
-        <dc:Bounds x="1220" y="140" width="100" height="80" />
+        <dc:Bounds x="1225" y="145" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_080adet_di" bpmnElement="Flow_080adet">
-        <di:waypoint x="1008" y="180" />
-        <di:waypoint x="1060" y="180" />
+        <di:waypoint x="1013" y="185" />
+        <di:waypoint x="1065" y="185" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14tzgp1_di" bpmnElement="Flow_14tzgp1">
-        <di:waypoint x="1320" y="180" />
-        <di:waypoint x="1382" y="180" />
+        <di:waypoint x="1325" y="185" />
+        <di:waypoint x="1387" y="185" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0k2jg9b_di" bpmnElement="Flow_0k2jg9b">
-        <di:waypoint x="1160" y="180" />
-        <di:waypoint x="1220" y="180" />
+        <di:waypoint x="1165" y="185" />
+        <di:waypoint x="1225" y="185" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0c54ce1_di" bpmnElement="Flow_0c54ce1">
         <di:waypoint x="215" y="177" />
@@ -156,10 +156,10 @@ userObj1.departmentName="IT";</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0h5w9lz_di" bpmnElement="Flow_0h5w9lz">
         <di:waypoint x="870" y="177" />
-        <di:waypoint x="940" y="177" />
+        <di:waypoint x="950" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qfs2td_di" bpmnElement="Flow_1qfs2td">
-        <di:waypoint x="1460" y="185" />
+        <di:waypoint x="1450" y="185" />
         <di:waypoint x="1530" y="185" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0yt6i94_di" bpmnElement="Flow_0yt6i94">

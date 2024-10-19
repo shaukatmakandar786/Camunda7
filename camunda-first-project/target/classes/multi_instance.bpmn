@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_11cuhe2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:process id="multi-instance-execute" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0xdcx4k</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0xdcx4k" sourceRef="StartEvent_1" targetRef="Activity_1sbbacy" />
+    <bpmn:serviceTask id="Activity_1sbbacy" name="Initialize Subject List" camunda:delegateExpression="${subjectsInitialize}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="temp">
+            <camunda:script scriptFormat="JavaScript">print("Initialized Subject List :: "+subjectList)</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xdcx4k</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bzj3ru</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0bzj3ru" sourceRef="Activity_1sbbacy" targetRef="Activity_0520p77" />
+    <bpmn:sequenceFlow id="Flow_1163fse" sourceRef="Activity_0520p77" targetRef="Activity_1m19gup" />
+    <bpmn:scriptTask id="Activity_0520p77" name="Assign Subject Name" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_0bzj3ru</bpmn:incoming>
+      <bpmn:outgoing>Flow_1163fse</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="subjectList" camunda:elementVariable="subjectObj">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">${subjectList.size()}</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:script>print("subjectObj id :: "+subjectObj.get("id"));
+var id=subjectObj.get("id");
+
+if(id==1)
+	subjectObj.put("name","Java");
+else if(id==2)
+	subjectObj.put("name","Python");
+else if(id==3)
+	subjectObj.put("name",".Net");
+else if(id==4)
+	subjectObj.put("name","JavaScript");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1vp56c3" sourceRef="Activity_1m19gup" targetRef="Activity_1s34n3p" />
+    <bpmn:scriptTask id="Activity_1m19gup" name="Subject List After Assigning name" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_1163fse</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vp56c3</bpmn:outgoing>
+      <bpmn:script>print("Subject List With Name :: "+subjectList);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0twyj8z" sourceRef="Activity_1s34n3p" targetRef="Activity_07azhav" />
+    <bpmn:serviceTask id="Activity_1s34n3p" name="Assign Display Name" camunda:delegateExpression="${subjectDisplayNameAssign}">
+      <bpmn:incoming>Flow_1vp56c3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0twyj8z</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="subjectList" camunda:elementVariable="subjectObj">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">${subjectList.size()}</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_03eilyi" sourceRef="Activity_07azhav" targetRef="Activity_1klnrvg" />
+    <bpmn:scriptTask id="Activity_07azhav" name="Print Subject List After Assign Display Name" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_0twyj8z</bpmn:incoming>
+      <bpmn:outgoing>Flow_03eilyi</bpmn:outgoing>
+      <bpmn:script>print("Subject List With Display Name :: "+subjectList);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="Activity_1klnrvg" name="Convert Java List to JSON" scriptFormat="JavaScript" camunda:resultVariable="subjectArray">
+      <bpmn:incoming>Flow_03eilyi</bpmn:incoming>
+      <bpmn:outgoing>Flow_14fl3mf</bpmn:outgoing>
+      <bpmn:script>var subjectArray=[];
+
+for(var i=0; i&lt; subjectList.size(); i++){
+	
+	var subjectObj={};
+	
+	var subjectMap=subjectList.get(i);
+	
+	subjectObj.id=subjectMap.get("id");
+	subjectObj.name=subjectMap.get("name");
+	subjectObj.displayName=subjectMap.get("displayName");
+	subjectArray.push(subjectObj);
+}
+
+print("Subject Array Json :: "+JSON.stringify(subjectArray));
+
+subjectArray;</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_14fl3mf" sourceRef="Activity_1klnrvg" targetRef="Activity_16t8zxb" />
+    <bpmn:subProcess id="Activity_1o4h93l">
+      <bpmn:incoming>Flow_0y8tqbv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oz72oo</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="${subjectListJSONNode.elements()}" camunda:elementVariable="subjectObj">
+        <bpmn:loopCardinality xsi:type="bpmn:tFormalExpression">${subjectListJSONNode.elements().size()}</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="Event_0naovjj">
+        <bpmn:outgoing>Flow_0k5ezg3</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0k5ezg3" sourceRef="Event_0naovjj" targetRef="Activity_0xcfnpg" />
+      <bpmn:sequenceFlow id="Flow_1vzvsab" sourceRef="Activity_0xcfnpg" targetRef="Activity_1x22i5a" />
+      <bpmn:endEvent id="Event_19q36zx">
+        <bpmn:incoming>Flow_0liu7ly</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0liu7ly" sourceRef="Activity_1x22i5a" targetRef="Event_19q36zx" />
+      <bpmn:scriptTask id="Activity_0xcfnpg" name="Assign Subject Code" scriptFormat="JavaScript">
+        <bpmn:incoming>Flow_0k5ezg3</bpmn:incoming>
+        <bpmn:outgoing>Flow_1vzvsab</bpmn:outgoing>
+        <bpmn:script>var subjectName=subjectObj.prop('name').value();
+
+var subjectCode='';
+
+if(subjectName=='Java')
+	subjectCode='J51';
+else if(subjectName=='Python')
+	subjectCode='J51';
+else if(subjectName=='.Net')
+	subjectCode='J51';
+else if(subjectName=='JavaScript')
+	subjectCode='J51';
+
+subjectObj.prop('code', subjectCode);</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:scriptTask id="Activity_1x22i5a" name="Assign Subject Teacher Info" scriptFormat="JavaScript">
+        <bpmn:incoming>Flow_1vzvsab</bpmn:incoming>
+        <bpmn:outgoing>Flow_0liu7ly</bpmn:outgoing>
+        <bpmn:script>var subjectName=subjectObj.prop('name').value();
+
+var subjectTeacherId='';
+var subjectTeacherName='';
+
+switch(subjectName){
+
+	case "Java":
+		subjectTeacherId="";
+		subjectTeacherName="";
+		break;
+		
+	case "Python":
+		subjectTeacherId="T1";
+		subjectTeacherName="Hiren";
+		break;
+
+	case ".Net":
+		subjectTeacherId="T2";
+		subjectTeacherName="Hasan";
+		break;
+	
+	case "JavaScript":
+		subjectTeacherId="T3";
+		subjectTeacherName="Asif";
+		break;
+}
+
+subjectObj.prop('subjectTeacherId', subjectTeacherId);
+subjectObj.prop('subjectTeacherName', subjectTeacherName);</bpmn:script>
+      </bpmn:scriptTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0y8tqbv" sourceRef="Activity_16t8zxb" targetRef="Activity_1o4h93l" />
+    <bpmn:scriptTask id="Activity_16t8zxb" name="Convert JSON into JSON Node" scriptFormat="javascript" camunda:resultVariable="subjectListJSONNode">
+      <bpmn:incoming>Flow_14fl3mf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0y8tqbv</bpmn:outgoing>
+      <bpmn:script>// JSON string representing an array of objects
+//String jsonString = "[{\"name\":\"John\", \"age\":30}, {\"name\":\"Jane\", \"age\":25}]";
+
+// Convert the JSON string to a SpinJsonNode
+//SpinJsonNode jsonArray = Spin.JSON(jsonString);
+//below line is equal to above line means we are created here SpinJsonNode by passing json Data
+
+S(JSON.stringify(subjectArray));
+
+ // JSON string representing an array of objects
+//	String jsonString = "[{\"name\":\"John\", \"age\":30}, {\"name\":\"Jane\", \"age\":25}]";
+	
+	// Convert the JSON string to a SpinJsonNode
+//	SpinJsonNode jsonArray = Spin.JSON(jsonString);
+	
+	// Convert to SpinList for easier manipulation
+//	SpinList&lt;SpinJsonNode&gt; spinList = jsonArray.elements();
+	
+	// Loop through the SpinList and access each element
+/*	for (SpinJsonNode element : spinList) {
+		String name = element.prop("name").stringValue();
+		int age = element.prop("age").numberValue().intValue();
+		System.out.println("Name: " + name + ", Age: " + age);
+	}
+*/	</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0oz72oo" sourceRef="Activity_1o4h93l" targetRef="Activity_0vo2jvf" />
+    <bpmn:scriptTask id="Activity_0vo2jvf" name="Print Subject List after assign code and teacher info" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_0oz72oo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u7t8aa</bpmn:outgoing>
+      <bpmn:script>print("Print Subject List after assign code and teacher info :: "+subjectListJSONNode);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1kqsqaq">
+      <bpmn:incoming>Flow_0u7t8aa</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0u7t8aa" sourceRef="Activity_0vo2jvf" targetRef="Event_1kqsqaq" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="multi-instance-execute">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y3csf0_di" bpmnElement="Activity_1sbbacy">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_132wc0b_di" bpmnElement="Activity_0520p77">
+        <dc:Bounds x="420" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00s2vz2_di" bpmnElement="Activity_1m19gup">
+        <dc:Bounds x="570" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c1heir_di" bpmnElement="Activity_1s34n3p">
+        <dc:Bounds x="720" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1omlxs7_di" bpmnElement="Activity_07azhav">
+        <dc:Bounds x="870" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pmz4wv_di" bpmnElement="Activity_1klnrvg">
+        <dc:Bounds x="1030" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gt8ikc_di" bpmnElement="Activity_0vo2jvf">
+        <dc:Bounds x="1950" y="137" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kqsqaq_di" bpmnElement="Event_1kqsqaq">
+        <dc:Bounds x="2092" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ysy3po_di" bpmnElement="Activity_16t8zxb">
+        <dc:Bounds x="1190" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16tvl4p_di" bpmnElement="Activity_1o4h93l" isExpanded="true">
+        <dc:Bounds x="1330" y="77" width="540" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0naovjj_di" bpmnElement="Event_0naovjj">
+        <dc:Bounds x="1370.3333333333333" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19q36zx_di" bpmnElement="Event_19q36zx">
+        <dc:Bounds x="1782" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05ebxyt_di" bpmnElement="Activity_0xcfnpg">
+        <dc:Bounds x="1460" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19jbnqu_di" bpmnElement="Activity_1x22i5a">
+        <dc:Bounds x="1620" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0k5ezg3_di" bpmnElement="Flow_0k5ezg3">
+        <di:waypoint x="1406" y="177" />
+        <di:waypoint x="1460" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0liu7ly_di" bpmnElement="Flow_0liu7ly">
+        <di:waypoint x="1720" y="177" />
+        <di:waypoint x="1782" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vzvsab_di" bpmnElement="Flow_1vzvsab">
+        <di:waypoint x="1560" y="177" />
+        <di:waypoint x="1620" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xdcx4k_di" bpmnElement="Flow_0xdcx4k">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bzj3ru_di" bpmnElement="Flow_0bzj3ru">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="420" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1163fse_di" bpmnElement="Flow_1163fse">
+        <di:waypoint x="520" y="177" />
+        <di:waypoint x="570" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vp56c3_di" bpmnElement="Flow_1vp56c3">
+        <di:waypoint x="670" y="177" />
+        <di:waypoint x="720" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0twyj8z_di" bpmnElement="Flow_0twyj8z">
+        <di:waypoint x="820" y="177" />
+        <di:waypoint x="870" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03eilyi_di" bpmnElement="Flow_03eilyi">
+        <di:waypoint x="970" y="177" />
+        <di:waypoint x="1030" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14fl3mf_di" bpmnElement="Flow_14fl3mf">
+        <di:waypoint x="1130" y="177" />
+        <di:waypoint x="1160" y="177" />
+        <di:waypoint x="1160" y="180" />
+        <di:waypoint x="1190" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y8tqbv_di" bpmnElement="Flow_0y8tqbv">
+        <di:waypoint x="1290" y="180" />
+        <di:waypoint x="1330" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oz72oo_di" bpmnElement="Flow_0oz72oo">
+        <di:waypoint x="1870" y="177" />
+        <di:waypoint x="1950" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u7t8aa_di" bpmnElement="Flow_0u7t8aa">
+        <di:waypoint x="2050" y="177" />
+        <di:waypoint x="2092" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

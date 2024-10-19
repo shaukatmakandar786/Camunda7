@@ -35,9 +35,11 @@
 userList;</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:scriptTask id="Activity_1l1qap5" name="Assign name and email" scriptFormat="JavaScript" camunda:resultVariable="outputObj">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_148gkot</bpmn:incoming>
       <bpmn:outgoing>Flow_1qrclyi</bpmn:outgoing>
-      <bpmn:script>userList.forEach(function(obj){
+      <bpmn:script>
+userList.forEach(function(obj){
 	
 	if(obj.id==inputObj.id){
 		
