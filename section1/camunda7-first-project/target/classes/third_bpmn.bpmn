@@ -16,7 +16,7 @@
 
 print(itemName);
 print(execution.getVariable("itemName"));
-print(execution.processBusinessKey);</bpmn:script>
+print("Bsuiness Key :: "+execution.processBusinessKey);</bpmn:script>
     </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
