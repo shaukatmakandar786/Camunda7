@@ -50,4 +50,13 @@ public class HomeController {
 		instance.executeWithVariablesInReturn();
 		return "BPMN has executed!";
 	}
+	
+	@GetMapping("/execute03")
+	public String execute03() {
+		
+		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey("Process_1vvr4hm");
+		instance.executeWithVariablesInReturn();
+		return "BPMN has executed!";
+	}
 }
