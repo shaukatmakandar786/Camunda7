@@ -55,7 +55,16 @@ public class HomeController {
 	public String execute03() {
 		
 		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey("Process_1vvr4hm");
+		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey("Process_1vvr4mm");
+		instance.executeWithVariablesInReturn();
+		return "BPMN has executed!";
+	}
+	
+	@GetMapping("/execute05")
+	public String execute05() {
+		
+		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey("Process_1vvr4mm");
 		instance.executeWithVariablesInReturn();
 		return "BPMN has executed!";
 	}
