@@ -8,5 +8,26 @@ camunda:
   bpm:
     generic-properties:
       properties:
-        historyTimeToLive: 5    
+        historyTimeToLive: 5         
+#    database:
+#      type: mysql
+#      schema-update: true
+#    job-execution:
+#      enabled: true           
                 
+#spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/camunda_db
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+

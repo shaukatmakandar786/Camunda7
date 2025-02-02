@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0trbaye" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:process id="Process_1ejvhpf" isExecutable="true">
+    <bpmn:startEvent id="Event_0uk22mx">
+      <bpmn:outgoing>Flow_13fyvag</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0o7g0kt">
+      <bpmn:incoming>Flow_033h9gr</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_01tet8q">
+      <bpmn:incoming>Flow_0ft9m5q</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1dnox8r" name="Business logic" camunda:delegateExpression="${businessLogic}">
+      <bpmn:incoming>Flow_13fyvag</bpmn:incoming>
+      <bpmn:outgoing>Flow_033h9gr</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0iynspr" name="Error Logic" camunda:delegateExpression="${errorLogic}">
+      <bpmn:incoming>Flow_17xefut</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ft9m5q</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_12i9e66" attachedToRef="Activity_1dnox8r">
+      <bpmn:outgoing>Flow_17xefut</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_080rsut" errorRef="Error_0tqn4d6" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_13fyvag" sourceRef="Event_0uk22mx" targetRef="Activity_1dnox8r" />
+    <bpmn:sequenceFlow id="Flow_033h9gr" sourceRef="Activity_1dnox8r" targetRef="Event_0o7g0kt" />
+    <bpmn:sequenceFlow id="Flow_17xefut" sourceRef="Event_12i9e66" targetRef="Activity_0iynspr" />
+    <bpmn:sequenceFlow id="Flow_0ft9m5q" sourceRef="Activity_0iynspr" targetRef="Event_01tet8q" />
+  </bpmn:process>
+  <bpmn:error id="Error_0tqn4d6" name="BUSINESS_ERROR" errorCode="BUSINESS_ERROR" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1ejvhpf">
+      <bpmndi:BPMNShape id="Event_0uk22mx_di" bpmnElement="Event_0uk22mx">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0o7g0kt_di" bpmnElement="Event_0o7g0kt">
+        <dc:Bounds x="392" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01tet8q_di" bpmnElement="Event_01tet8q">
+        <dc:Bounds x="392" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lhl1z5_di" bpmnElement="Activity_1dnox8r">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ky38tr_di" bpmnElement="Activity_0iynspr">
+        <dc:Bounds x="240" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_07j7gob_di" bpmnElement="Event_12i9e66">
+        <dc:Bounds x="272" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_13fyvag_di" bpmnElement="Flow_13fyvag">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_033h9gr_di" bpmnElement="Flow_033h9gr">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="392" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ft9m5q_di" bpmnElement="Flow_0ft9m5q">
+        <di:waypoint x="340" y="300" />
+        <di:waypoint x="392" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17xefut_di" bpmnElement="Flow_17xefut">
+        <di:waypoint x="290" y="178" />
+        <di:waypoint x="290" y="260" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

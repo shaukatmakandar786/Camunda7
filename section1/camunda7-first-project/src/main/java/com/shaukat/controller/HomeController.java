@@ -4,6 +4,7 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,11 +16,11 @@ public class HomeController {
 		return "Today is a good day!";
 	}
 	
-	@GetMapping("/execute")
-	public String execute() {
+	@GetMapping("/execute/{processKey}")
+	public String execute(@PathVariable("processKey") String processKey) {
 		
 		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey("Process_1c1tx0h");
+		ProcessInstantiationBuilder instance = processEngine.getRuntimeService().createProcessInstanceByKey(processKey);
 		instance.executeWithVariablesInReturn();
 		return "BPMN has executed!";
 	}
