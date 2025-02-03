@@ -7,10 +7,10 @@
     <bpmn:sequenceFlow id="Flow_0auc9hl" sourceRef="StartEvent_1" targetRef="Activity_0e38alz" />
     <bpmn:sequenceFlow id="Flow_1ip4ysp" sourceRef="Activity_0e38alz" targetRef="Activity_0c4d8ng" />
     <bpmn:endEvent id="Event_0yujvoj">
-      <bpmn:incoming>Flow_0fkus4z</bpmn:incoming>
+      <bpmn:incoming>Flow_14rz73y</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0ecb4ip" sourceRef="Activity_0c4d8ng" targetRef="Activity_0ylf9bi" />
-    <bpmn:scriptTask id="Activity_0e38alz" scriptFormat="JavaScript" camunda:resultVariable="userObj">
+    <bpmn:scriptTask id="Activity_0e38alz" name="User Details" scriptFormat="JavaScript" camunda:resultVariable="userObj">
       <bpmn:incoming>Flow_0auc9hl</bpmn:incoming>
       <bpmn:outgoing>Flow_1ip4ysp</bpmn:outgoing>
       <bpmn:script>var obj={
@@ -19,20 +19,36 @@
 	name: "shaukat",
 	age: 67,
 	creditScore: 750
-}
+};
 
 obj;</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:businessRuleTask id="Activity_0c4d8ng" camunda:resultVariable="isEligibleForLoan" camunda:decisionRef="eligibility_check" camunda:mapDecisionResult="singleEntry">
+    <bpmn:businessRuleTask id="Activity_0c4d8ng" name="Loan Eligibility" camunda:resultVariable="isEligibleForLoan" camunda:decisionRef="loan_eligibility_dmn" camunda:mapDecisionResult="singleEntry">
       <bpmn:incoming>Flow_1ip4ysp</bpmn:incoming>
       <bpmn:outgoing>Flow_0ecb4ip</bpmn:outgoing>
     </bpmn:businessRuleTask>
-    <bpmn:sequenceFlow id="Flow_0fkus4z" sourceRef="Activity_0ylf9bi" targetRef="Event_0yujvoj" />
+    <bpmn:sequenceFlow id="Flow_0fkus4z" sourceRef="Activity_0ylf9bi" targetRef="Activity_03tjebi" />
     <bpmn:scriptTask id="Activity_0ylf9bi" name="Print first DMN output" scriptFormat="JavaScript">
       <bpmn:incoming>Flow_0ecb4ip</bpmn:incoming>
       <bpmn:outgoing>Flow_0fkus4z</bpmn:outgoing>
       <bpmn:script>print("output from first DMN :: (is Eligible for Loan) :: "+isEligibleForLoan);</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1nip54t" sourceRef="Activity_03tjebi" targetRef="Activity_13stfka" />
+    <bpmn:businessRuleTask id="Activity_03tjebi" name="Loan Eligibility With Discount" camunda:resultVariable="isEligibleForLoanWithDiscount" camunda:decisionRef="loan_eligibility_with_discount_dmn" camunda:mapDecisionResult="singleResult">
+      <bpmn:incoming>Flow_0fkus4z</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nip54t</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:scriptTask id="Activity_13stfka" name="Print first DMN output" scriptFormat="JavaScript">
+      <bpmn:incoming>Flow_1nip54t</bpmn:incoming>
+      <bpmn:outgoing>Flow_14rz73y</bpmn:outgoing>
+      <bpmn:script>print("output from first DMN :: (is Eligible for Loan) :: "+isEligibleForLoanWithDiscount);
+
+
+print("Discount: "+isEligibleForLoanWithDiscount.get("discount"));
+
+print("isEligibleForLoan: "+isEligibleForLoanWithDiscount.get("isEligibleForLoan"));</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_14rz73y" sourceRef="Activity_13stfka" targetRef="Event_0yujvoj" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="isEligibleForLoan">
@@ -41,15 +57,25 @@ obj;</bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_09nxt2y_di" bpmnElement="Activity_0e38alz">
         <dc:Bounds x="240" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cmn9ww_di" bpmnElement="Activity_0ylf9bi">
+        <dc:Bounds x="560" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0celd7d_di" bpmnElement="Activity_0c4d8ng">
         <dc:Bounds x="400" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0atoodt_di" bpmnElement="Activity_03tjebi">
+        <dc:Bounds x="730" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0yujvoj_di" bpmnElement="Event_0yujvoj">
-        <dc:Bounds x="762" y="102" width="36" height="36" />
+        <dc:Bounds x="1032" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1cmn9ww_di" bpmnElement="Activity_0ylf9bi">
-        <dc:Bounds x="570" y="80" width="100" height="80" />
+      <bpmndi:BPMNShape id="BPMNShape_1oa4gx9" bpmnElement="Activity_13stfka">
+        <dc:Bounds x="890" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0auc9hl_di" bpmnElement="Flow_0auc9hl">
@@ -62,11 +88,19 @@ obj;</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ecb4ip_di" bpmnElement="Flow_0ecb4ip">
         <di:waypoint x="500" y="120" />
-        <di:waypoint x="570" y="120" />
+        <di:waypoint x="560" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fkus4z_di" bpmnElement="Flow_0fkus4z">
-        <di:waypoint x="670" y="120" />
-        <di:waypoint x="762" y="120" />
+        <di:waypoint x="660" y="120" />
+        <di:waypoint x="730" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nip54t_di" bpmnElement="Flow_1nip54t">
+        <di:waypoint x="830" y="120" />
+        <di:waypoint x="890" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14rz73y_di" bpmnElement="Flow_14rz73y">
+        <di:waypoint x="990" y="120" />
+        <di:waypoint x="1032" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

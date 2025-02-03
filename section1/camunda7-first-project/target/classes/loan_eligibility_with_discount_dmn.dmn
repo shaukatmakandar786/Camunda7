@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_0oof3en" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <decision id="loan_eligibility_with_discount_dmn" name="Loan Eligibility With Discount">
+    <decisionTable id="DecisionTable_0avo212">
+      <input id="Input_1" label="Age below 20" camunda:inputVariable="isKid">
+        <inputExpression id="InputExpression_1" typeRef="boolean" expressionLanguage="feel">
+          <text>userObj.age &lt; 20
+</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0yyusov" label="Age between 20 and 60" camunda:inputVariable="isAdult">
+        <inputExpression id="LiteralExpression_1reqz0s" typeRef="boolean" expressionLanguage="feel">
+          <text>userObj.age &gt;= 20 and userObj.age &lt;= 60</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1kbtlly" label="Age above 60" camunda:inputVariable="isSeniorCitizen">
+        <inputExpression id="LiteralExpression_1llnqqd" typeRef="boolean" expressionLanguage="feel">
+          <text>userObj.age &gt; 60</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1h845hh" label="Credit score above 700" camunda:inputVariable="isCreditScoreGood">
+        <inputExpression id="LiteralExpression_14asvs5" typeRef="boolean" expressionLanguage="feel">
+          <text>userObj.creditScore &gt; 700</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Is eligibile for Loan" name="isEligibleForLoan" typeRef="boolean" />
+      <output id="OutputClause_14kc9aw" label="Discount" name="discount" typeRef="double" />
+      <rule id="DecisionRule_1pxztfb">
+        <inputEntry id="UnaryTests_10vxqs9">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05ce7bc">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j7qal2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03k1vsm">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dx7bgv">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1gq8qz1">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0dx69kg">
+        <inputEntry id="UnaryTests_01e0cc3">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1pjc38f">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0qw6fum">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zz45hv">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00zdd6x">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1h4e7y3">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0d0qcu4">
+        <inputEntry id="UnaryTests_1ty0q5g">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nvafw8">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jog5bi">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06nycxw">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02mod8l">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1b83u85">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1lcjjds">
+        <inputEntry id="UnaryTests_171pwij">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05oqunb">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1av693g">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15ai9pk">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0hdh70a">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0fty85k">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_17z90nf">
+        <inputEntry id="UnaryTests_0zox2vb">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16v7lsi">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05jkrig">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17ydtwu">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nh8q90">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1i2u40o">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="loan_eligibility_with_discount_dmn">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0t6zl7i" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0t6zl7i" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
   <decision id="eligibility_check" name="Loan Eligibility">
     <decisionTable id="DecisionTable_1oyquui">
-      <input id="Input_1" label="Age Below 20">
+      <input id="Input_1" label="Age Below 20" camunda:inputVariable="isKid">
         <inputExpression id="InputExpression_1" typeRef="boolean">
           <text>userOb.age &lt; 20</text>
         </inputExpression>
       </input>
-      <input id="InputClause_0jyz3o9" label="Age Between 20 and 60">
+      <input id="InputClause_0jyz3o9" label="Age Between 20 and 60" camunda:inputVariable="isAdult">
         <inputExpression id="LiteralExpression_03qbk6k" typeRef="boolean">
           <text>userObj.age &gt;= 20 and userObj.age &lt;= 60</text>
         </inputExpression>
       </input>
-      <input id="InputClause_12t16tp" label="Age above 60" biodi:width="192">
-        <inputExpression id="LiteralExpression_01021k6" typeRef="string">
+      <input id="InputClause_12t16tp" label="Age above 60" biodi:width="192" camunda:inputVariable="isSeniorCitizen">
+        <inputExpression id="LiteralExpression_01021k6" typeRef="boolean">
           <text>userObj.age &gt; 60</text>
         </inputExpression>
       </input>
-      <input id="InputClause_16dyeea" label="Credit Score Above 700">
-        <inputExpression id="LiteralExpression_0k9qg8w" typeRef="string">
+      <input id="InputClause_16dyeea" label="Credit Score Above 700" camunda:inputVariable="isCreditScore">
+        <inputExpression id="LiteralExpression_0k9qg8w" typeRef="boolean">
           <text>userObj.creditScore &gt; 700</text>
         </inputExpression>
       </input>
